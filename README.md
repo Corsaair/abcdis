@@ -49,7 +49,7 @@ History
 
 In the Tamarin project you coulf find an utility named `abcdump`,
 when Redtamarin extended the project we kept this utility around
-because it is always useful to be able to decompile stuff aand see what's inside ;).
+because it is always useful to be able to decompile stuff and see what's inside ;).
 
 In the mean time, during the years where Tamarin was still udpdated,
 came a patch by Alex Macdonald and contributed by Chris Brichford
@@ -59,7 +59,7 @@ see [Bug 640986 - abcdump should be better factored and dump more information ab
 
 Because we changed the avmplus API with the Redtamatin API,
 some bits and bops needed to be adapted, but yeah it's all here
-compiling and working a standalone executable.
+compiling and working as standalone executables.
 
 
 abcdump
