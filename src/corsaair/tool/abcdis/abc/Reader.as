@@ -5,17 +5,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package abc {
 
-    import avmplus.File
+    //import avmplus.File;
 
-    import flash.utils.ByteArray
+    import flash.utils.ByteArray;
+
+    import shell.FileSystem;
     
-    import Utils
-    import abc.Types.ABCFile
-    import abc.ABCReader
-    import SWF.SWFReader
-    import SWC.SWCReader
+    import Utils;
+    import abc.Types.ABCFile;
+    import abc.ABCReader;
+    import SWF.SWFReader;
+    import SWC.SWCReader;
 
-    public final class Reader {
+    public final class Reader
+    {
 
         public static function readS32(data:ByteArray):int {
             var result:int = data.readUnsignedByte();
@@ -55,7 +58,7 @@ package abc {
         
         public static function createReader(file : String) : IReader
         {
-            var data:ByteArray = File.readByteArray(file)
+            var data:ByteArray = FileSystem.readByteArray( file );
             var readers:Array = [ABCReader, SWFReader, SWCReader]
             
             for each(var ri : Class in readers) {

@@ -5,25 +5,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package abc
 {
-    import avmplus.File
+    //import avmplus.File;
+    import shell.FileSystem;
     
-    import flash.utils.ByteArray
-    import flash.utils.Dictionary
+    import flash.utils.ByteArray;
+    import flash.utils.Dictionary;
     
     import abc.Constants;
-    import abc.Types.ABCFile
-    import abc.Types.Exception
-    import abc.Types.Pool
-    import abc.Types.MethodInfo
-    import abc.Types.MethodBody
-    import abc.Types.ScriptInfo
-    import abc.Types.Traits
-    import abc.Types.Trait
-    import abc.Types.ConstantMultiname
-    import abc.Types.ConstantNamespace
-    import abc.Types.ConstantNamespaceSet
-    import abc.Types.InstanceInfo
-    import abc.Types.ClassInfo
+    import abc.Types.ABCFile;
+    import abc.Types.Exception;
+    import abc.Types.Pool;
+    import abc.Types.MethodInfo;
+    import abc.Types.MethodBody;
+    import abc.Types.ScriptInfo;
+    import abc.Types.Traits;
+    import abc.Types.Trait;
+    import abc.Types.ConstantMultiname;
+    import abc.Types.ConstantNamespace;
+    import abc.Types.ConstantNamespaceSet;
+    import abc.Types.InstanceInfo;
+    import abc.Types.ClassInfo;
     import IndentingPrinter;
     import ByteArrayPrinter;
     import TablePrinter;
@@ -422,12 +423,13 @@ package abc
         
         public static function writeFile(abcfile:ABCFile, file:String) : void
         {
-            var data : ByteArray = new ByteArray()
+            var data : ByteArray = new ByteArray();
             
-            var printer : IPrinter = new ByteArrayPrinter(data)
-            print(abcfile, printer)
+            var printer : IPrinter = new ByteArrayPrinter( data );
+            print( abcfile, printer );
             
-            File.writeByteArray(file, data)
+            data.position = 0;
+            FileSystem.writeByteArray( file, data );
         }
         
         public static function print(abcfile:ABCFile, printer : IPrinter) : void

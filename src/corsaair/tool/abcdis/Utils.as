@@ -7,9 +7,12 @@
 package
 {
 
-    import avmplus.System
-    import avmplus.File
-    import flash.utils.ByteArray
+    //import avmplus.System;
+    //import avmplus.File;
+
+    import flash.utils.ByteArray;
+
+    import shell.FileSystem;
 
     public final class Utils
     {
@@ -62,9 +65,10 @@ package
         }
         
         public static function writeStringToFile(s:String, f:String):void {
-            var ba:ByteArray = new ByteArray()
-            ba.writeUTFBytes(s)
-            File.writeByteArray(f, ba);
+            var ba:ByteArray = new ByteArray();
+                ba.writeUTFBytes(s);
+                ba.position = 0;
+            FileSystem.writeByteArray( f, ba );
         }
         
         public static function escapeGraphvizLabel(s:String):String {

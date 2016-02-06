@@ -5,22 +5,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package abc
 {
-    import avmplus.File
+    //import avmplus.File;
     
-    import flash.utils.ByteArray
+    import flash.utils.ByteArray;
     
+    import shell.FileSystem;
+
     import abc.Constants;
-    import abc.Types.ABCFile
-    import abc.Types.Exception
-    import abc.Types.Pool
-    import abc.Types.MethodInfo
-    import abc.Types.MethodBody
-    import abc.Types.ScriptInfo
-    import abc.Types.Traits
-    import abc.Types.Trait
-    import abc.Types.ConstantMultiname
-    import abc.Types.ConstantNamespace
-    import abc.Types.ConstantNamespaceSet
+    import abc.Types.ABCFile;
+    import abc.Types.Exception;
+    import abc.Types.Pool;
+    import abc.Types.MethodInfo;
+    import abc.Types.MethodBody;
+    import abc.Types.ScriptInfo;
+    import abc.Types.Traits;
+    import abc.Types.Trait;
+    import abc.Types.ConstantMultiname;
+    import abc.Types.ConstantNamespace;
+    import abc.Types.ConstantNamespaceSet;
     import IndentingPrinter;
     import ByteArrayPrinter;
     import TablePrinter;
@@ -40,8 +42,9 @@ package abc
         
         static private var identifierRegEx : RegExp = /^[$_a-zA-Z][$_a-zA-Z0-9]*$/;
         
-        public function write():void {
-            data = new ByteArray()
+        public function write():void
+        {
+            data = new ByteArray();
             var byteArrayPrinter : ByteArrayPrinter = new ByteArrayPrinter(data);
             printer = new IndentingPrinter(byteArrayPrinter, 0, 4);
             printer.println("// minor_version " + abcfile.minor_version);
@@ -63,7 +66,8 @@ package abc
             
             writeArray(abcfile.methodBodies,   writeMethodBody)
             
-            File.writeByteArray(file, data)
+            data.position = 0;
+            FileSystem.writeByteArray( file, data );
         }
         
         private function writeScriptInfo(si:ScriptInfo, id:int) : void {

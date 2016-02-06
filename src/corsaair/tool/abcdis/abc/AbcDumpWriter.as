@@ -5,26 +5,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package abc
 {
-    import avmplus.File
+    //import avmplus.File;
     
-    import flash.utils.ByteArray
-    import flash.utils.Dictionary
+    import flash.utils.ByteArray;
+    import flash.utils.Dictionary;
     
     import abc.Constants;
-    import abc.Types.ABCFile
-    import abc.Types.Exception
-    import abc.Types.Pool
-    import abc.Types.MethodInfo
-    import abc.Types.MethodBody
-    import abc.Types.ScriptInfo
-    import abc.Types.Traits
-    import abc.Types.Trait
-    import abc.Types.ConstantMultiname
-    import abc.Types.ConstantNamespace
-    import abc.Types.ConstantNamespaceSet
-    import abc.Types.InstanceInfo
-    import abc.Types.ClassInfo
-    import abc.Types.MetadataInfo
+    import abc.Types.ABCFile;
+    import abc.Types.Exception;
+    import abc.Types.Pool;
+    import abc.Types.MethodInfo;
+    import abc.Types.MethodBody;
+    import abc.Types.ScriptInfo;
+    import abc.Types.Traits;
+    import abc.Types.Trait;
+    import abc.Types.ConstantMultiname;
+    import abc.Types.ConstantNamespace;
+    import abc.Types.ConstantNamespaceSet;
+    import abc.Types.InstanceInfo;
+    import abc.Types.ClassInfo;
+    import abc.Types.MetadataInfo;
     import IndentingPrinter;
     import ByteArrayPrinter;
     import TablePrinter;

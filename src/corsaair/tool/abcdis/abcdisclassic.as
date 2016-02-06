@@ -4,31 +4,38 @@
 
 package
 {
-    import avmplus.System;
-    Main.main(System.argv)
+    //import avmplus.System;
+
+    import shell.Program;
+
+    Main.main( Program.argv );
 }
 
-import abc.Reader
-import abc.Types.ABCFile
-import abc.Types.ConstantMultiname
-import abc.Types.ConstantNamespace
-import abc.Types.ScriptInfo
-import abc.Types.Trait
-import abc.Types.Pool
-import abc.Instruction
-import abc.Types.MethodBody
-import SWF.SWFReader
+//import avmplus.File;
+
+import flash.utils.ByteArray;
+
+import shell.FileSystem;
+
+import abc.Reader;
+import abc.Types.ABCFile;
+import abc.Types.ConstantMultiname;
+import abc.Types.ConstantNamespace;
+import abc.Types.ScriptInfo;
+import abc.Types.Trait;
+import abc.Types.Pool;
+import abc.Instruction;
+import abc.Types.MethodBody;
+import SWF.SWFReader;
 import SWF.SWF;
 import SWF.Tag;
-import abc.IReader
-import abc.ABCReader
-import abc.AbcAPIWriter
-import abc.Verifier
-import IPrinter
-import TablePrinter
-import avmplus.File
-import abc.AbcDumpWriter
-import flash.utils.ByteArray
+import abc.IReader;
+import abc.ABCReader;
+import abc.AbcAPIWriter;
+import abc.Verifier;
+import IPrinter;
+import TablePrinter;
+import abc.AbcDumpWriter;
 import SWC.SWCReader;
 
 class UsageError extends Error
@@ -328,13 +335,24 @@ Options:
         {
             if (endsWith(file, ".swf"))
             {
-                var stem : String = stripExt(file)
-                var abcs:Array = Reader.readABCBytes(file)
+                var stem : String = stripExt(file);
+                var abcs:Array = Reader.readABCBytes(file);
+
                 if (abcs.length > 0)
-                    File.writeByteArray(stem + ".abc", abcs[0])
-                
+                {
+                    var abc_one:ByteArray = abcs[0];
+                        abc_one.position = 0;
+                    FileSystem.writeByteArray( stem + ".abc", abc_one );
+                }
+                    
+                var abc_m:ByteArray;
                 for (var i : uint = 1; i < abcs.length; ++i)
-                    File.writeByteArray(stem + i + ".abc", abcs[i])
+                {
+                    abc_m = abcs[i];
+                    abc_m.position = 0;
+                    FileSystem.writeByteArray( stem + i + ".abc", abc_m );
+                }
+
             }
         }
     }
@@ -596,7 +614,8 @@ Options:
                         outputByteArray.writeByte(0x46); outputByteArray.writeByte(0x57); outputByteArray.writeByte(0x53)
                         outputByteArray.writeBytes(uncompressedBytes)
                         var outputFilename : String = file + ".swf";
-                        File.writeByteArray(file + ".swf", outputByteArray)
+                        outputByteArray.position = 0;
+                        FileSystem.writeByteArray(file + ".swf", outputByteArray);
                         trace("// decompressed swf " + originalData.length + " -> " + outputByteArray.length)
                         trace("// wrote " + outputByteArray.length + " bytes to file " + outputFilename) 
                     }

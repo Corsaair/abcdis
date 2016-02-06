@@ -6,22 +6,26 @@
 
 package
 {
-import avmplus.System
-import avmplus.File
-import avmplus.describeType;
-import avmplus.FLASH10_FLAGS;
+    //import avmplus.System;
+    //import avmplus.File;
 
-import flash.utils.ByteArray
+    import avmplus.describeType;
+    import avmplus.FLASH10_FLAGS;
 
-import abc.Reader
-import abc.DOTWriter
-import abc.XMLWriter
-import abc.AbcFormatWriter
-import abc.AbcDumpWriter
-import abc.AbcAsmWriter
-import abc.Verifier
-import abc.Types.ABCFile
-import abc.AbcAPIWriter
+    import flash.utils.ByteArray;
+
+    import shell.Program;
+    import shell.FileSystem;
+
+    import abc.Reader;
+    import abc.DOTWriter;
+    import abc.XMLWriter;
+    import abc.AbcFormatWriter;
+    import abc.AbcDumpWriter;
+    import abc.AbcAsmWriter;
+    import abc.Verifier;
+    import abc.Types.ABCFile;
+    import abc.AbcAPIWriter;
 
 public class ABCDump
 {
@@ -49,7 +53,7 @@ public class ABCDump
     public static function abcDump() : void
     {
         var dumper : ABCDump = new ABCDump();
-        var cmdLine : CmdLine = CmdLine.parse(System.argv);
+        var cmdLine : CmdLine = CmdLine.parse( Program.argv );
 
         var abcs:Array = Reader.readFile(cmdLine.inputFileName)
 
@@ -77,8 +81,12 @@ public class ABCDump
                 i++;
             }
         }
-        File.writeByteArray(cmdLine.outputDirectory + baseName + ".dump", abcFormatBytes);
-        File.writeByteArray(cmdLine.outputDirectory + baseName + ".txt", abcDumpBytes);
+
+        abcFormatBytes.position = 0;
+        FileSystem.writeByteArray(cmdLine.outputDirectory + baseName + ".dump", abcFormatBytes);
+        
+        abcDumpBytes.position = 0;
+        FileSystem.writeByteArray(cmdLine.outputDirectory + baseName + ".txt", abcDumpBytes);
     }
 }
 

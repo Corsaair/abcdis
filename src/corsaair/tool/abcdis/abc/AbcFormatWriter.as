@@ -5,33 +5,36 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package abc {
 
-    import avmplus.File
+    //import avmplus.File;
     
-    import flash.utils.ByteArray
+    import flash.utils.ByteArray;
+
+    import shell.FileSystem;
     
     import IPrinter;
     import IndentingPrinter;
     import ByteArrayPrinter;
     import TablePrinter;
-    import abc.Reader
+    import abc.Reader;
     //import abc.IWriter
-    import abc.Types.Pool
-    import abc.Types.ABCFile
-    import abc.Types.ConstantNamespace
-    import abc.Types.ConstantMultiname
-    import abc.Types.ConstantNamespaceSet
-    import abc.Types.Exception
-    import abc.Types.Trait
-    import abc.Types.Traits
-    import abc.Types.ValueKind
-    import abc.Types.MethodInfo
-    import abc.Types.MethodBody
-    import abc.Types.MetadataInfo
-    import abc.Types.ClassInfo
-    import abc.Types.ScriptInfo
-    import abc.Types.InstanceInfo
+    import abc.Types.Pool;
+    import abc.Types.ABCFile;
+    import abc.Types.ConstantNamespace;
+    import abc.Types.ConstantMultiname;
+    import abc.Types.ConstantNamespaceSet;
+    import abc.Types.Exception;
+    import abc.Types.Trait;
+    import abc.Types.Traits;
+    import abc.Types.ValueKind;
+    import abc.Types.MethodInfo;
+    import abc.Types.MethodBody;
+    import abc.Types.MetadataInfo;
+    import abc.Types.ClassInfo;
+    import abc.Types.ScriptInfo;
+    import abc.Types.InstanceInfo;
     
-    public final class AbcFormatWriter /*implements IWriter*/ {
+    public final class AbcFormatWriter /*implements IWriter*/
+    {
         private var abcfile:ABCFile
         private var data:ByteArray
         private var printer : IndentingPrinter;
@@ -81,14 +84,16 @@ package abc {
             var bytes : ByteArray = new ByteArray();
             var p : IPrinter = new ByteArrayPrinter(bytes);
             var w : AbcFormatWriter = new AbcFormatWriter(abcfile)
-            w.write(p);
-            File.writeByteArray(file, bytes);
+                w.write(p);
+
+            bytes.position = 0;
+            FileSystem.writeByteArray( file, bytes );
         }
         
         public static function print(abcfile : ABCFile, p : IPrinter) : void
         {
             var w : AbcFormatWriter = new AbcFormatWriter(abcfile)
-            w.write(p);
+                w.write(p);
         }
         
         private function write(p : IPrinter) : void
