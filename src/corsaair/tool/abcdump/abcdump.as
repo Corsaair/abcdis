@@ -6,9 +6,12 @@
 
 package abcdump
 {
-    import flash.utils.ByteArray
-    import avmplus.System
-    import avmplus.File
+    import flash.utils.ByteArray;
+    //import avmplus.System;
+    import avmplus.File;
+
+    import shell.Program;
+    import shell.FileSystem;
 
     include "abc-constants.as"
 
@@ -765,7 +768,7 @@ package abcdump
             parseMethodBodies()
 
             if (doExtractAbc==true)
-                File.writeByteArray(nextAbcFname(), data);
+                FileSystem.writeByteArray(nextAbcFname(), data);
         }
 
         function readU32():int
@@ -1502,7 +1505,7 @@ package abcdump
             ba.writeByte(version>>24)
             ba.writeUnsignedInt(data.length+8)
             ba.writeBytes(data,0,data.length)
-            File.writeByteArray(fn+".swf",ba)
+            FileSystem.writeByteArray(fn+".swf",ba)
             infoPrint("wrote "+ba.length+" bytes to file "+fn+".swf")
         }
 
@@ -1638,7 +1641,7 @@ package abcdump
     function help()
     {
         print(usage);
-        System.exit(1)
+        Program.exit(1)
     }
 
     function processArg(arg:String)
@@ -1687,7 +1690,7 @@ package abcdump
     var useMetadataVersions = false
     var currentFname = ''
     var currentFcount = 0
-    for each (var file in System.argv)
+    for each (var file in Program.argv)
     {
         if (file.indexOf('-')==0)
         {
@@ -1700,7 +1703,7 @@ package abcdump
             currentFname = file.substring(0,x);
         else
             currentFname = file;
-        var data:ByteArray = File.readByteArray(file)
+        var data:ByteArray = FileSystem.readByteArray(file)
         data.endian = "littleEndian"
         var version:uint = data.readUnsignedInt()
         switch (version&0xffffff) {
@@ -1730,21 +1733,21 @@ package abcdump
             infoPrint("decompressed swf "+csize+" -> "+udata.length)
             if (doDecompressOnly) {
                Swf.emitSwf(file,udata,version)
-               System.exit(0)
+               Program.exit(0)
             }
             udata.position = 0
             /*var swf:Swf =*/ new Swf(udata)
             break
         case 70|87<<8|83<<16: // SWF
             if (doDecompressOnly)
-               System.exit(0)
+               Program.exit(0)
             infoPrint("header FWS version "+data[3])
             data.position = 8 // skip header and length
             /*var swf:Swf =*/ new Swf(data)
             break
         case 90|87<<8|83<<16: // SWZ
             if (doDecompressOnly)
-               System.exit(0)
+               Program.exit(0)
             infoPrint("header ZWS (lzma compressed) version "+data[3])
             udata=new ByteArray
             udata.endian = "littleEndian"
@@ -1790,7 +1793,7 @@ package abcdump
         }
     }
 
-    if (System.argv.length < 1)
+    if (Program.argv.length < 1)
         help();
 }
 
