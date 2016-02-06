@@ -15,7 +15,7 @@ package abcdump
 
     include "abc-constants.as"
 
-    var usage = [
+    var usage_lines:Array = [
     "Displays the contents of abc or swf files",
     "",
     "Usage:",
@@ -39,7 +39,9 @@ package abcdump
     " -mdversions Use in conjunction with -api when the abc/swf uses old-style versioning",
     " -pools Print out the contents of the constant pools",
     " --decompress-only Write out a decompressed version of the swc and exit"
-    ].join("\n");
+    ];
+
+    var usage:String = usage_lines.join("\n");
 
     const TAB = "  "
 
@@ -49,12 +51,12 @@ package abcdump
 
     function dumpPrint(s) {
         if (doExtractAbs)
-            print(s);
+            trace( s );
     }
 
     function infoPrint(s) {
         if (doExtractInfo)
-            print((doExtractAbs ? "// " : "") + s)
+            trace( (doExtractAbs ? "// " : "") + s );
     }
 
     function toStringNull(x) {
@@ -768,7 +770,13 @@ package abcdump
             parseMethodBodies()
 
             if (doExtractAbc==true)
-                FileSystem.writeByteArray(nextAbcFname(), data);
+            {
+                var tmp:ByteArray = new ByteArray();
+                    tmp.writeBytes( data );
+                    tmp.position = 0;
+
+                FileSystem.writeByteArray(nextAbcFname(), tmp);
+            }
         }
 
         function readU32():int
@@ -892,6 +900,7 @@ package abcdump
             start = data.position
 
             // floats
+            /*
             if( floatSupport) {
                n = readU32()
                floats = [float.NaN]
@@ -913,6 +922,7 @@ package abcdump
                infoPrint("Cpool float4s size "+(data.position-start)+" "+int(100*(data.position-start)/data.length)+" %")
                start = data.position
             }
+            */
 
             // strings
             n = readU32()
@@ -1090,7 +1100,7 @@ package abcdump
                         else
                         {
                             if (!defaults[kind])
-                                print("ERROR kind="+kind+" method_id " + i)
+                                trace( "ERROR kind="+kind+" method_id " + i );
                             else
                                 m.optionalValues[k] = defaults[kind][index]
                         }
@@ -1201,7 +1211,7 @@ package abcdump
                     break;
                 }
                 if (!member)
-                    print("error trait kind "+kind)
+                    trace( "error trait kind "+kind );
                 member.kind = kind
                 member.name = name
                 t.names[String(name)] = t.members[i] = member
@@ -1309,8 +1319,8 @@ package abcdump
                     try {
                         m.dump(this,indent)
                     } catch (e:Error) {
-                        print(m.format())
-                        throw e
+                        trace( m.format() );
+                        throw e;
                     }
                 }
             }
@@ -1640,7 +1650,7 @@ package abcdump
 
     function help()
     {
-        print(usage);
+        trace( usage );
         Program.exit(1)
     }
 
@@ -1666,8 +1676,8 @@ package abcdump
         } else if (arg == '--decompress-only') {
             doDecompressOnly = true
         } else {
-            print('Unknown option '+arg)
-            help()
+            trace(' Unknown option ' + arg );
+            help();
         }
     }
 
@@ -1788,8 +1798,8 @@ package abcdump
             /*var swf:Swf =*/ new Swf(udata)
             break
         default:
-            print('unknown format 0x'+version.toString(16))
-            break
+            trace( 'unknown format 0x' + version.toString(16) );
+            break;
         }
     }
 
