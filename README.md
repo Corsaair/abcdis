@@ -1,4 +1,4 @@
-abcdis - The ABC dissasembler
+abcdis - The ABC disassembler
 =============================
 
 From the Redtamarin `/utils` some ABC dissasembler utilities.
