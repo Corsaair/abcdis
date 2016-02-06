@@ -8,7 +8,7 @@ package abcdump
 {
     import flash.utils.ByteArray;
     //import avmplus.System;
-    import avmplus.File;
+    //import avmplus.File;
 
     import shell.Program;
     import shell.FileSystem;
