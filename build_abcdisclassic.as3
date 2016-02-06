@@ -1,0 +1,20 @@
+/* Note:
+   we compile using redbean
+   to get redbean you need to install the redtamarin-sdk
+   see: https://github.com/Corsaair/redtamarin/releases
+*/
+
+import redbean.*;
+import shell.*;
+
+if( FileSystem.exists( "abcdump2.abc" ) )
+{
+	FileSystem.remove( "abcdump2.abc" );
+}
+
+compile( "src/abcdisclassic.as" );
+FileSystem.move( "src/abcdisclassic.abc", "abcdump2.abc" );
+
+// we want to use redshell_dd
+_globals.useDebugger = true;
+projector( "abcdump2", true, null, [ "abcdump2.abc" ] );
