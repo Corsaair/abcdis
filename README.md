@@ -1,10 +1,13 @@
 abcdis - The ABC disassembler
 =============================
 
-From the Redtamarin `/utils` some ABC dissasembler utilities.
+From the Redtamarin `/utils` some ActionScript Bytecode (ABC) dissasembler utilities.
 
 For now, those utilities have been ported "as is",
 later on we will refactor and reorganise them.
+
+The goal is to build a comprehensive libraries that can work with
+the ABC format, the SWF format, the SWC format, etc.
 
 
 How To Build
